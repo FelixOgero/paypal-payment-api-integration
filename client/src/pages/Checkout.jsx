@@ -104,7 +104,7 @@ function Checkout() {
           View Payment Dashboard
         </Link>
         <a
-          href="https://github.com/FelixOgero/intasend-payment-api-integration"
+          href="https://github.com/FelixOgero/paypal-payment-api-integration"
           target="_blank"
           rel="noopener noreferrer"
           style={{
