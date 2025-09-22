@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function PayPalButton({ items, total }) {
   const [loading, setLoading] = useState(false);
@@ -11,18 +11,23 @@ function PayPalButton({ items, total }) {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Call our backend to create a PayPal order
-      const response = await axios.post('/api/payments/create-order', {
-        items,
-        total
-      });
-      
+      // const response = await axios.post('/api/payments/create-order', {
+      //   items,
+      //   total
+      // });
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/payments/create-order`,
+        { items, total }
+      );
+
       // Redirect to PayPal approval URL
       window.location.href = response.data.approvalUrl;
     } catch (err) {
-      console.error('Error initiating PayPal payment:', err);
-      setError('Failed to initiate payment. Please try again.');
+      console.error("Error initiating PayPal payment:", err);
+      setError("Failed to initiate payment. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -36,7 +41,7 @@ function PayPalButton({ items, total }) {
         disabled={loading}
         className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded disabled:opacity-50"
       >
-        {loading ? 'Processing...' : 'Pay with PayPal'}
+        {loading ? "Processing..." : "Pay with PayPal"}
       </button>
     </div>
   );

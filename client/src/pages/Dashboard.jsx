@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Dashboard() {
   const [payments, setPayments] = useState([]);
@@ -10,11 +10,15 @@ function Dashboard() {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await axios.get('/api/payments');
+        // const response = await axios.get('/api/payments');
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/payments`
+        );
+
         setPayments(response.data);
       } catch (err) {
-        console.error('Error fetching payments:', err);
-        setError('Could not retrieve payment history');
+        console.error("Error fetching payments:", err);
+        setError("Could not retrieve payment history");
       } finally {
         setLoading(false);
       }
@@ -25,17 +29,17 @@ function Dashboard() {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'COMPLETED':
-        return 'text-green-600';
-      case 'CREATED':
-      case 'SAVED':
-      case 'APPROVED':
-        return 'text-blue-600';
-      case 'VOIDED':
-      case 'FAILED':
-        return 'text-red-600';
+      case "COMPLETED":
+        return "text-green-600";
+      case "CREATED":
+      case "SAVED":
+      case "APPROVED":
+        return "text-blue-600";
+      case "VOIDED":
+      case "FAILED":
+        return "text-red-600";
       default:
-        return 'text-gray-600';
+        return "text-gray-600";
     }
   };
 
@@ -46,14 +50,14 @@ function Dashboard() {
     <div className="max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Payment Dashboard</h1>
-        <Link 
-          to="/" 
+        <Link
+          to="/"
           className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
         >
           Make New Payment
         </Link>
       </div>
-      
+
       {payments.length === 0 ? (
         <div className="text-center py-10 bg-gray-50 rounded-lg">
           <p className="text-gray-500">No payment history found</p>
@@ -93,14 +97,19 @@ function Dashboard() {
                     ${payment.amount.toFixed(2)} {payment.currency}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <span className={`${getStatusColor(payment.status)} font-semibold`}>
+                    <span
+                      className={`${getStatusColor(
+                        payment.status
+                      )} font-semibold`}
+                    >
                       {payment.status}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <Link
                       to={`/success?orderId=${payment.orderId}`}
-                      className="text-blue-500 hover:underline">
+                      className="text-blue-500 hover:underline"
+                    >
                       View Details
                     </Link>
                   </td>
