@@ -121,10 +121,12 @@ exports.captureOrder = async (req, res) => {
     await payment.save();
     
     // Redirect to success page with the order ID
-    res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/success?orderId=${payment.orderId}`);
+    // res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/success?orderId=${payment.orderId}`);
+    res.redirect(`${process.env.CLIENT_URL || 'https://paypal-payment-api-integration.vercel.app/'}/success?orderId=${payment.orderId}`);
   } catch (error) {
     console.error('Error capturing PayPal order:', error);
-    res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/cancel?error=capture_failed`);
+    // res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/cancel?error=capture_failed`);
+    res.redirect(`${process.env.CLIENT_URL || 'https://paypal-payment-api-integration.vercel.app/'}/cancel?error=capture_failed`);
   }
 };
 
@@ -142,10 +144,12 @@ exports.cancelOrder = async (req, res) => {
     }
     
     // Redirect to cancel page
-    res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/cancel`);
+    // res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/cancel`);
+    res.redirect(`${process.env.CLIENT_URL || 'https://paypal-payment-api-integration.vercel.app/'}/cancel`);
   } catch (error) {
     console.error('Error canceling order:', error);
-    res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/cancel?error=cancel_failed`);
+    // res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/cancel?error=cancel_failed`);
+    res.redirect(`${process.env.CLIENT_URL || 'https://paypal-payment-api-integration.vercel.app/'}/cancel?error=cancel_failed`);
   }
 };
 
